@@ -1,0 +1,111 @@
+/* Global Styles */
+body {
+    background-color: #f4f7fb;  /* Light beige-gray background */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: #34495e;  /* Dark gray text */
+    margin: 3rem 5%;  /* Top/Bottom/Left/Right margins for centering */
+}
+
+h1 {
+    font-size: 3rem;
+    color: #2c3e50;  /* Darker text for the title */
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #2c3e50;  /* Similar color to h1 */
+    margin-bottom: 1rem;
+}
+
+header > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+    max-width: 100%;  /* Makes the image responsive */
+}
+
+img:hover {
+    transform: scale(1.05);
+    transition: 1s ease;
+}
+
+nav ul {
+    list-style: none;
+    text-align: center;
+    background-color: #2980b9;  /* Blue background for navigation */
+    border-radius: 10px;
+    margin: 2rem;
+    padding: 1rem;
+}
+
+nav li {
+    display: inline-block;
+    margin: 15px;
+}
+
+nav a {
+    color: #fff;  /* White text for links */
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+nav li:hover {
+    transform: scale(1.1);
+    transition: 0.5s ease;
+}
+
+section {
+    display: flex;
+    flex-wrap: wrap;  /* Allows responsive layout */
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+
+article {
+    flex: 1;
+    margin: 2rem;
+    text-align: center;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+article:hover {
+    transform: scale(1.05);
+}
+
+.banner {
+    color: #fff;
+    background-image: url('garden2.png');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    text-align: center;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    border-top: 2px solid #2980b9;
+    padding: 1rem 0;
+}
+
+footer div {
+    flex: 1;
+    text-align: center;
+}
+
+.logo img {
+    width: 40px;
+}
+
+.copyright {
+    font-size: 0.8rem;
+    text-align: center;
+    color: #7f8c8d;
+}
