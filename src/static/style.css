@@ -7,7 +7,7 @@ body {
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 4rem;
     color: #2c3e50;  /* Darker text for the title */
     margin-bottom: 1rem;
 }
@@ -100,8 +100,10 @@ footer div {
     text-align: center;
 }
 
-.logo img {
-    width: 40px;
+.logo {
+    display: block;
+    margin: 0 auto;
+    width: 300px; /* Adjust size as needed */
 }
 
 .copyright {
