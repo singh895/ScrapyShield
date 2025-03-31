@@ -1,6 +1,20 @@
 from flask import Flask, render_template, request
+import sqlite3
 
 app = Flask(__name__, template_folder="src/template", static_folder="src/static")
+
+def init_db():
+    conn = sqlite3.connect('test.db')
+    c = conn.cursor()
+    c.execute('''
+    CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT)
+    ''')
+    c.execute('''
+    INSERT INTO users (username, password) VALUES ('admin', 'password123')
+    ''')
+    conn.commit()
+    conn.close()
+
 
 @app.route('/')
 def home():
@@ -60,13 +74,37 @@ def xss_iframe():
     </html>
     '''
 
-@app.route('/sqli')
+@app.route('/sqli', methods=['GET', 'POST'])
 def sqli():
-    return '<h1>SQL Injection Test</h1><form action="login"><input name="username"><input name="password"></form>'
+    conn = sqlite3.connect('test.db')
+    c = conn.cursor()
+    
+    if request.method == 'POST':
+        # Retrieve input from form
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        # Perform the SQL query with the injected inputs
+        query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
+        c.execute(query)
+        
+        result = c.fetchone()
+        if result:
+            return f"Welcome, {username}!"
+        else:
+            return "Invalid credentials"
+    return '''
+        <h1>SQL Injection Test</h1>
+        <form method="POST">
+            <input name="username" placeholder="Username"><br><br>
+            <input name="password" placeholder="Password"><br><br>
+            <button type="submit">Login</button>
+        </form>
+    '''
 
 @app.route('/malware')
 def malware():
     return '<h1>Malware Test Page</h1><a href="/download/malware.exe">Download</a>'
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(port= 5001, debug=True, host='0.0.0.0')

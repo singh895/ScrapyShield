@@ -1,0 +1,12 @@
+Flask              # Web framework
+
+Scrapy==2.12.0              # Web crawling framework
+twisted==24.3.0             # Core dependency for Scrapy
+w3lib==2.3.1                # HTML and URL processing
+parsel==1.10.0              # HTML parsing and XPath support
+
+pytest==8.1.1                # Testing framework
+requests==2.31.0             # Making HTTP requests
+sqlite-utils==3.36.0         # Utility for SQLite operations
+
+
