@@ -1,0 +1,64 @@
+name: ScrapyShield CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # Set up Python environment
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.9"
+
+    # Cache dependencies
+    - name: Cache pip dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    # Install dependencies
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install scrapy
+
+    # Lint with flake8
+    - name: Lint with flake8
+      run: |
+        source venv/bin/activate
+        pip install flake8
+        flake8 . --count --max-complexity=10 --max-line-length=127 --statistics
+
+    # Run Scrapy spider
+    - name: Run Scrapy Spider
+      run: |
+        source venv/bin/activate
+        scrapy crawl sqli_test
+
+    # Run tests (optional, if you have test cases)
+    - name: Run Tests
+      run: |
+        source venv/bin/activate
+        pytest tests/
+
