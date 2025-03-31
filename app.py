@@ -8,7 +8,20 @@ def home():
 
 @app.route('/xss')
 def xss():
-    return '<h1>XSS Test Page</h1><script>alert("XSS")</script>'
+    return render_template('xss.html')
+    # return '<h1>XSS Test Page</h1><script>alert("XSS")</script>'
+
+@app.route('/xss_script')
+def xss_script():
+    return render_template('xss_script.html')
+
+@app.route('/xss_img')
+def xss_img():
+    return render_template('xss_img.html')
+
+@app.route('/xss_iframe')
+def xss_iframe():
+    return render_template('xss_iframe.html')
 
 @app.route('/sqli')
 def sqli():
