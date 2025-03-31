@@ -1,0 +1,60 @@
+URL: http://localhost:5000/xss_img
+Scripts: []
+Images: ["alert('XSS via Image!')"]
+Iframes: []
+==================================================
+URL: http://localhost:5000/xss_script
+Scripts: []
+Images: []
+Iframes: []
+==================================================
+URL: http://localhost:5000/xss_iframe
+Scripts: []
+Images: []
+Iframes: ["javascript:alert('XSS via Iframe!')"]
+==================================================
+URL: http://localhost:5000/
+Scripts: []
+Images: []
+Iframes: []
+==================================================
+URL: http://localhost:5000/xss_img
+Scripts: []
+Images: ["alert('XSS via Image!')"]
+Iframes: []
+==================================================
+URL: http://localhost:5000/xss_script
+Scripts: []
+Images: []
+Iframes: []
+==================================================
+URL: http://localhost:5000/xss_iframe
+Scripts: []
+Images: []
+Iframes: ["javascript:alert('XSS via Iframe!')"]
+==================================================
+URL: http://localhost:5000/
+Scripts: []
+Images: []
+Iframes: []
+==================================================
+URL: http://localhost:5000/
+Scripts: []
+Images: []
+Iframes: []
+==================================================
+URL: http://localhost:5000/xss_img
+Scripts: []
+Images: ["alert('XSS via Image!')"]
+Iframes: []
+==================================================
+URL: http://localhost:5000/xss_script
+Scripts: []
+Images: []
+Iframes: []
+==================================================
+URL: http://localhost:5000/xss_iframe
+Scripts: []
+Images: []
+Iframes: ["javascript:alert('XSS via Iframe!')"]
+==================================================
