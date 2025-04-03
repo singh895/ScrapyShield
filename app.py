@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file, abort, make_response
+import os
 import sqlite3
+import random, string
 
 app = Flask(__name__, template_folder="src/template", static_folder="src/static")
 
@@ -104,7 +106,48 @@ def sqli():
 
 @app.route('/malware')
 def malware():
-    return '<h1>Malware Test Page</h1><a href="/download/malware.exe">Download</a>'
+    return render_template('malware.html')
+
+DOWNLOADS_DIR = os.path.abspath('/workspaces/ScrapyShield/mali_crawler/dist/')
+
+@app.route('/download/MalwareSimulation.exe')
+def malwareDownload():
+    try:
+        # Path to the file
+        file_path = os.path.join(DOWNLOADS_DIR, 'MalwareSimulation.exe')
+
+        # Check if the file exists
+        if not os.path.isfile(file_path):
+            abort(404, description="File not found")
+
+        # Serve the file securely
+        response = make_response(send_file(
+            file_path,
+            mimetype='application/vnd.microsoft.portable-executable',
+            as_attachment=True,
+            download_name='MalwareSimulation.exe'
+        ))
+
+        # Add security headers
+        response.headers.extend({
+            'X-Content-Type-Options': 'nosniff',
+            'Content-Security-Policy': "default-src 'none'",
+            'X-Simulation-Malware': 'true'
+        })
+
+        return response
+
+    except Exception as e:
+        # Handle errors gracefully
+        abort(500, description=f"Error serving file: {str(e)}")
+
+
+@app.route('/disguised_download')
+def disguised_download():
+    # Generate random filename with common extensions
+    ext = random.choice(['doc', 'pdf', 'exe', 'msi'])
+    fake_name = ''.join(random.choices(string.ascii_lowercase, k=8)) + f'.{ext}'
+    return f'<a href="/download/{fake_name}">Download Important Document</a>'
 
 if __name__ == "__main__":
     app.run(port= 5001, debug=True, host='0.0.0.0')
