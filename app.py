@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, send_file, abort, make_respon
 import os
 import sqlite3
 import random, string
+import subprocess
+import sys
 
 app = Flask(__name__, template_folder="src/template", static_folder="src/static")
 
@@ -148,6 +150,17 @@ def disguised_download():
     ext = random.choice(['doc', 'pdf', 'exe', 'msi'])
     fake_name = ''.join(random.choices(string.ascii_lowercase, k=8)) + f'.{ext}'
     return f'<a href="/download/{fake_name}">Download Important Document</a>'
+
+# app.py addition
+@app.route('/trigger-crawl')
+def trigger_crawl():
+    subprocess.run([
+        sys.executable, '-m', 'scrapy', 'crawl', 'malware_crawler',
+        '-s', 'USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        '-s', 'ROBOTSTXT_OBEY=False'
+    ], check=True)
+    return 'Crawl initiated', 202
+
 
 if __name__ == "__main__":
     app.run(port= 5001, debug=True, host='0.0.0.0')
