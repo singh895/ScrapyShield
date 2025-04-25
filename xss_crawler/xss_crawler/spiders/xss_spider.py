@@ -1,19 +1,42 @@
 import scrapy
 from scrapy.linkextractors import LinkExtractor
+import urllib.parse
 
 class XSSSpider(scrapy.Spider):
     name = "xss_spider"
     allowed_domains = ["localhost"]
-    start_urls = ["http://localhost:5000/xss"]
+    start_urls = ["http://localhost:5001/xss"]
+
     def parse(self, response):
-        self.log(f"Visiting: {response.url}")
+        with open("/workspaces/ScrapyShield/xss_crawler/xss_crawler/payloads.txt", "r") as f:
+            xss_payloads = [line.strip() for line in f]
+            for payload in xss_payloads:
+                url = response.url + f"?name={urllib.parse.quote(payload)}"
+                yield scrapy.Request(url, callback=self.check_xss, meta={'payload': payload})
+                if payload in response.text:
+                    print(f"[!] Payload reflected: {payload}")
+        # self.log(f"Visiting: {response.url}")
 
-        # Extract links to attack pages
-        attack_links = response.xpath("//a/@href").extract()
+        # # Extract links to attack pages
+        # attack_links = response.xpath("//a/@href").extract()
 
-        for link in attack_links:
-            if "xss_" in link:  # Filter only XSS attack pages
-                yield response.follow(link, callback=self.parse_attack)
+        # for link in attack_links:
+        #     if "xss_" in link:  # Filter only XSS attack pages
+        #         yield response.follow(link, callback=self.parse_attack)
+
+    
+    def check_xss(self, response):
+        payload = response.meta['payload']
+        if payload in response.text:
+            self.logger.info(f"[!] Potential XSS at {response.url} with payload: {payload}")
+            yield {
+                'url': response.url,
+                'payload': payload,
+                'content': response.text
+            }
+            self.logger.info(f"[🧪 XSS FOUND] Payload reflected: {payload}")
+        else:
+            self.logger.info(f"[✅ SAFE] Payload NOT reflected: {payload}")
 
     def parse_attack(self, response):
         self.log(f"Testing XSS on: {response.url}")
