@@ -1,0 +1,15 @@
+\begin{thebibliography}{1}
+
+\bibitem{least-weird-forum-user}
+Have you ever locked yourself in the bathroom to read?
+\newblock https://forums.onlinebookclub.org/viewtopic.php?t=16313.
+
+\bibitem{dong2023behind}
+Hongying Dong, Hao Shu, Vijay Prakash, Yizhe Zhang, Muhammad~Talha Paracha,
+  David Choffnes, Santiago Torres-Arias, Danny~Yuxing Huang, and Yixin Sun.
+\newblock Behind the scenes: Uncovering tls and server certificate practice of
+  iot device vendors in the wild.
+\newblock In {\em Proceedings of the 2023 ACM on Internet Measurement
+  Conference}, pages 457--477, 2023.
+
+\end{thebibliography}
