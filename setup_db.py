@@ -17,9 +17,9 @@ c.execute('''
 c.executemany('''
     INSERT INTO users (username, password) VALUES (?, ?)
 ''', [
-    ('admin', 'admin123'),
-    ('user1', 'password1'),
-    ('user2', 'password2')
+    ('purva', 'password3'),
+    ('saanvi', 'password1'),
+    ('sean', 'password2')
 ])
 
 # Commit and close connection
