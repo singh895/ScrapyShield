@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, send_file, abort, make_response
-logs = []  # Store attack logs
+attack_logs = []
+
+
 import os
 import sqlite3
 import random, string
@@ -78,6 +80,7 @@ def xss_iframe():
     </body>
     </html>
     '''
+from datetime import datetime
 
 @app.route('/sqli', methods=['GET', 'POST'])
 def sqli():
@@ -85,20 +88,31 @@ def sqli():
     c = conn.cursor()
     
     if request.method == 'POST':
-        # Retrieve input from form
         username = request.form.get('username')
         password = request.form.get('password')
-        
-        logs.append(f"[SQLi Attempt] Username: {username}, Password: {password}")
-        # Perform the SQL query with the injected inputs
+
         query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
-        c.execute(query)
-        
-        result = c.fetchone()
+        try:
+            c.execute(query)
+            result = c.fetchone()
+            success = bool(result)
+        except Exception as e:
+            success = False
+
+        # Record full attack info
+        attack_logs.append({
+            'attack_type': 'SQL Injection',
+            'payload': f"Username: {username}, Password: {password}",
+            'result': 'Success' if success else 'Failure',
+            'status_code': 200,
+            'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        })
+
         if result:
             return f"Welcome, {username}!"
         else:
             return "Invalid credentials"
+    
     return '''
         <h1>SQL Injection Test</h1>
         <form method="POST">
@@ -164,8 +178,74 @@ def trigger_crawl():
     return 'Crawl initiated', 202
 
 @app.route('/logs')
-def view_logs():
-    return "<br>".join(logs)
+def logs():
+    table_rows = ''.join(
+        f"<tr><td>{log['timestamp']}</td><td>{log['attack_type']}</td><td>{log['payload']}</td><td>{log['result']}</td><td>{log['status_code']}</td></tr>"
+        for log in attack_logs
+    )
+    html_content = f'''
+    <html>
+    <head>
+        <meta http-equiv="refresh" content="5">
+        <title>Attack Logs</title>
+        <style>
+            body {{ font-family: Arial, sans-serif; }}
+            table {{ border-collapse: collapse; width: 90%; margin: auto; }}
+            th, td {{ border: 1px solid black; padding: 8px; text-align: center; }}
+            th {{ background-color: #f2f2f2; }}
+            tr:nth-child(even) {{ background-color: #f9f9f9; }}
+            .button {{
+                display: block;
+                margin: 20px auto;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+            }}
+        </style>
+        <script>
+            function triggerCrawl() {{
+                fetch('/trigger-sqli-crawl')
+                    .then(response => {{
+                        if (response.ok) {{
+                            alert('SQL Injection Crawl Started!');
+                        }} else {{
+                            alert('Failed to start crawl.');
+                        }}
+                    }})
+                    .catch(error => {{
+                        alert('Error: ' + error);
+                    }});
+            }}
+        </script>
+    </head>
+    <body>
+        <h2 style="text-align:center;">Attack Logs</h2>
+        <button class="button" onclick="triggerCrawl()">Trigger SQLi Crawl</button>
+        <table>
+            <tr><th>Timestamp</th><th>Attack Type</th><th>Payload</th><th>Result</th><th>Status Code</th></tr>
+            {table_rows}
+        </table>
+    </body>
+    </html>
+    '''
+    return html_content
+
+
+
+@app.route('/trigger-sqli-crawl')
+def trigger_sqli_crawl():
+    scrapy_project_dir = os.path.join(os.getcwd(), 'sql_crawler')
+    subprocess.Popen([
+        sys.executable, '-m', 'scrapy', 'crawl', 'sqli_test',
+        '-s', 'USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+        '-s', 'ROBOTSTXT_OBEY=False'
+    ], cwd=scrapy_project_dir)
+    return 'SQL Injection Crawl initiated in background', 202
+
 
 
 if __name__ == "__main__":

