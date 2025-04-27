@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, send_file, abort, make_response
+logs = []  # Store attack logs
 import os
 import sqlite3
 import random, string
@@ -88,6 +89,7 @@ def sqli():
         username = request.form.get('username')
         password = request.form.get('password')
         
+        logs.append(f"[SQLi Attempt] Username: {username}, Password: {password}")
         # Perform the SQL query with the injected inputs
         query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
         c.execute(query)
@@ -160,6 +162,10 @@ def trigger_crawl():
         '-s', 'ROBOTSTXT_OBEY=False'
     ], check=True)
     return 'Crawl initiated', 202
+
+@app.route('/logs')
+def view_logs():
+    return "<br>".join(logs)
 
 
 if __name__ == "__main__":
