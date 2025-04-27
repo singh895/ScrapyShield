@@ -9,4 +9,4 @@ pytest==8.1.1                # Testing framework
 requests==2.31.0             # Making HTTP requests
 sqlite-utils==3.36.0         # Utility for SQLite operations
 
-
+scrapy-playwright
