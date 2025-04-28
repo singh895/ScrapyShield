@@ -1,47 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XSS Attack Test</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-        }
-        h1 {
-            color: #b30000;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px;
-        }
-        a {
-            text-decoration: none;
-            color: #d9534f;
-            font-size: 18px;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <h1>XSS Attack Test Options</h1>
-    <p>Select an XSS attack vector to test.</p>
-    <ul>
-        <li><a href="/xss_script">Script Injection XSS</a></li>
-        <li><a href="/xss_img">Image Injection XSS</a></li>
-        <li><a href="/xss_iframe">I-frame Injection XSS</a></li>
-    </ul>
-    <p><a href="/">← Back to Home</a></p>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -68,10 +24,10 @@
 
   <!-- ────────────── Explanatory Info ────────────── -->
   <section style="max-width:800px; margin:2rem auto; line-height:1.6;">
-    <h2>What We’re Testing</h2>
+    <h2>What We're Testing</h2>
     <ul>
       <li><strong>&lt;script&gt; Injection</strong>: can we inject a raw &lt;script&gt; tag?</li>
-      <li><strong>Attribute Break-Out</strong>: e.g. <code>'"><script>…</script></code> to escape an attribute context.</li>
+      <li><strong>Attribute Break-Out</strong>: e.g. <code>'"><script></script></code> to escape an attribute context.</li>
       <li><strong>Event-Handler Vectors</strong>: SVG <code>onload</code>, &lt;details open&gt; <code>ontoggle</code>, IMG <code>onerror</code>, etc.</li>
       <li><strong>Data-URI Scripts</strong>: loading &lt;script src="data:…"&gt; to bypass CSP.</li>
       <li><strong>Autofocus Triggers</strong>: <code>&lt;textarea autofocus onfocus=alert()&gt;</code> or similar.</li>

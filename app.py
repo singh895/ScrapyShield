@@ -148,33 +148,6 @@ def malware():
 
 DOWNLOADS_DIR = os.path.abspath('/workspaces/ScrapyShield/mali_crawler/dist/')
 
-# @app.route('/download/MalwareSimulation.exe')
-# def malwareDownload():
-#     try:
-#         # Path to the file
-#         file_path = os.path.join(DOWNLOADS_DIR, 'MalwareSimulation.exe')
-
-#         # Check if the file exists
-#         if not os.path.isfile(file_path):
-#             abort(404, description="File not found")
-
-#         # Serve the file securely
-#         response = make_response(send_file(
-#             file_path,
-#             mimetype='application/vnd.microsoft.portable-executable',
-#             as_attachment=True,
-#             download_name='MalwareSimulation.exe'
-#         ))
-
-#         # Add security headers
-#         response.headers.extend({
-#             'X-Content-Type-Options': 'nosniff',
-#             'Content-Security-Policy': "default-src 'none'",
-#             'X-Simulation-Malware': 'true'
-#         })
-
-#         return response
-
 @app.route('/download/<path:filename>')
 def download_file(filename):
     # Secure the filename to prevent directory traversal attacks
@@ -216,92 +189,104 @@ def trigger_crawl():
 
 @app.route('/logs')
 def logs():
+    # Build escaped table rows
     table_rows = ''.join(
-        f"<tr><td>{html.escape(log['timestamp'])}</td><td>{html.escape(log['attack_type'])}</td><td>{html.escape(log['payload'])}</td><td>{html.escape(log['result'])}</td><td>{html.escape(str(log['status_code']))}</td></tr>"
+        "<tr>"
+        f"<td>{html.escape(log['timestamp'])}</td>"
+        f"<td>{html.escape(log['attack_type'])}</td>"
+        f"<td>{html.escape(log['payload'])}</td>"
+        f"<td>{html.escape(log['result'])}</td>"
+        f"<td>{html.escape(str(log['status_code']))}</td>"
+        "</tr>"
         for log in attack_logs
     )
-    html_content = f'''
-    <html>
-    <head>
-        <meta http-equiv="refresh" content="5">
-        <title>Attack Logs</title>
-        <style>
-            body {{ font-family: Arial, sans-serif; }}
-            table {{ border-collapse: collapse; width: 90%; margin: auto; }}
-            th, td {{ border: 1px solid black; padding: 8px; text-align: center; }}
-            th {{ background-color: #f2f2f2; }}
-            tr:nth-child(even) {{ background-color: #f9f9f9; }}
-            .button {{
-                display: block;
-                margin: 20px auto;
-                padding: 10px 20px;
-                font-size: 16px;
-                cursor: pointer;
-                background-color: #4CAF50;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                text-align: center;
-                text-decoration: none;
-            }}
-            .button.blue {{ background-color: #2196F3; }}
-        </style>
-        <script>
-            function triggerCrawl() {{
-                fetch('/trigger-sqli-crawl')
-                    .then(response => {{
-                        if (response.ok) {{
-                            alert('SQL Injection Crawl Started!');
-                        }} else {{
-                            alert('Failed to start crawl.');
-                        }}
-                    }})
-                    .catch(error => {{
-                        alert('Error: ' + error);
-                    }});
-            }}
-            function triggerMaliCrawl() {{
-                fetch('/trigger-mali-crawl')
-                    .then(response => {{
-                        if (response.ok) {{
-                            alert('Malware Crawl Started!');
-                        }} else {{
-                            alert('Failed to start crawl.');
-                        }}
-                    }})
-                    .catch(error => {{
-                        alert('Error: ' + error);
-                    }});
-            }}
-            function triggerXSSCrawl() {{
-                fetch('/trigger-xss-crawl')
-                    .then(response => {{
-                        if (response.ok) {{
-                            alert('XSS Crawl Started!');
-                        }} else {{
-                            alert('Failed to start crawl.');
-                        }}
-                    }})
-                    .catch(error => {{
-                        alert('Error: ' + error);
-                    }});
-            }}
-        </script>
-    </head>
-    <body>
-        <h2 style="text-align:center;">Attack Logs</h2>
-        <button class="button" onclick="triggerCrawl()">Trigger SQLi Crawl</button>
-        <button class="button" onclick="triggerXSSCrawl()">Trigger XSS Crawl</button>
-        <button class="button" onclick="triggerMaliCrawl()">Trigger Malware Crawl</button>
-        <a href="/malware-results" target="_blank" class="button blue">View Malware Crawl Results</a>
-        
-        <table>
-            <tr><th>Timestamp</th><th>Attack Type</th><th>Payload</th><th>Result</th><th>Status Code</th></tr>
-            {table_rows}
-        </table>
-    </body>
-    </html>
-    '''
+
+    # Full HTML response
+    html_content = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-p1CmJ7TQ5fwyfQHO+X8ZfWj1K5KfRb1EN5p5SWd1/kIkTO7EY1q4/dd+uc9Y4jXe1bZ+lPvMBNi+IbbE1JY0hQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta http-equiv="refresh" content="5">
+    <title>Attack Logs</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f0f0f0; }}
+        h2 {{ text-align: center; padding: 1rem 0; }}
+        .button {{
+            display: inline-block;
+            margin: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }}
+        .button.blue {{ background-color: #2196F3; }}
+        table {{
+            border-collapse: collapse;
+            width: 90%;
+            margin: 1rem auto 2rem;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }}
+        th, td {{
+            border: 1px solid #ccc;
+            padding: 0.75rem;
+            text-align: center;
+        }}
+        th {{ background-color: #ddd; }}
+        tr:nth-child(even) {{ background-color: #f9f9f9; }}
+    </style>
+    <script>
+        function triggerCrawl() {{
+            fetch('/trigger-sqli-crawl')
+              .then(r => r.ok ? alert('SQLi Crawl Started!') : alert('Failed to start SQLi'));
+        }}
+        function triggerXSSCrawl() {{
+            fetch('/trigger-xss-crawl')
+              .then(r => r.ok ? alert('XSS Crawl Started!') : alert('Failed to start XSS'));
+        }}
+        function triggerMaliCrawl() {{
+            fetch('/trigger-mali-crawl')
+              .then(r => r.ok ? alert('Malware Crawl Started!') : alert('Failed to start Malware'));
+        }}
+    </script>
+</head>
+<body>
+    <h2>Attack Logs</h2>
+    <div style="text-align:center;">
+        <button class="button" onclick="triggerCrawl()">
+            <i class="fa-solid fa-bug"></i> Trigger SQLi Crawl
+        </button>
+        <button class="button" onclick="triggerXSSCrawl()">
+            <i class="fa-solid fa-bug"></i> Trigger XSS Crawl
+        </button>
+        <button class="button" onclick="triggerMaliCrawl()">
+            <i class="fa-solid fa-bug"></i> Trigger Malware Crawl
+        </button>
+        <a href="/malware-results" target="_blank" class="button blue">
+            <i class="fa-solid fa-download"></i> View Malware Results
+        </a>
+    </div>
+    <table>
+        <tr>
+            <th>Timestamp</th>
+            <th>Attack Type</th>
+            <th>Payload</th>
+            <th>Result</th>
+            <th>Status Code</th>
+        </tr>
+        {table_rows}
+    </table>
+</body>
+</html>"""
     return html_content
 
 
