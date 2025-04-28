@@ -291,9 +291,10 @@ def logs():
     <body>
         <h2 style="text-align:center;">Attack Logs</h2>
         <button class="button" onclick="triggerCrawl()">Trigger SQLi Crawl</button>
+        <button class="button" onclick="triggerXSSCrawl()">Trigger XSS Crawl</button>
         <button class="button" onclick="triggerMaliCrawl()">Trigger Malware Crawl</button>
         <a href="/malware-results" target="_blank" class="button blue">View Malware Crawl Results</a>
-        <button class="button" onclick="triggerXSSCrawl()">Trigger XSS Crawl</button>
+        
         <table>
             <tr><th>Timestamp</th><th>Attack Type</th><th>Payload</th><th>Result</th><th>Status Code</th></tr>
             {table_rows}
