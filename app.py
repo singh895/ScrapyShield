@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 from werkzeug.utils import secure_filename
 
-
+import html
 import os
 import sqlite3
 import random, string
@@ -38,31 +38,68 @@ def xss():
 
 @app.route('/xss_script')
 def xss_script():
-    # return render_template('xss_script.html')
-    user_input = request.args.get('name', '')  
-    # if user_input:
-    #     attack_logs.append({
-    #         'attack_type':  'XSS',
-    #         'payload':      user_input,
-    #         'result':       xss_triggered,
-    #         'status_code':  200,
-    #         'timestamp':    datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    #     })
-    return '''
+    user_input = request.args.get('name', '')
+
+    result_text = ""
+    if user_input:
+        # 1) rudimentary “did it run?” check
+        success = "ontoggle" in user_input or "onerror" in user_input or "onload" in user_input
+        result_text = "Success" if success else "Failure"
+
+        # 2) log it
+        attack_logs.append({
+            'attack_type': 'XSS',
+            'payload':     user_input,
+            'result':      result_text,
+            'status_code': 200,
+            'timestamp':   datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        })
+
+    # 3) render the form + response + result
+    return f'''
     <html>
-    <head><title>Script Injection XSS</title></head>
-    <body>
+      <head><title>Script Injection XSS</title></head>
+      <body>
         <h1>Script Injection XSS</h1>
         <p>Enter your name:</p>
         <form action="/xss_script" method="GET">
-            <input type="text" name="name">
-            <input type="submit" value="Submit">
+          <input type="text" name="name" value="{html.escape(user_input)}">
+          <input type="submit" value="Submit">
         </form>
         <p>Response:</p>
-        <div>{}</div>
-    </body>
+        <div>{html.escape(user_input)}</div>
+        {f"<p><strong>Result:</strong> {result_text}</p>" if user_input else ""}
+      </body>
     </html>
-    '''.format(request.args.get('name', ''))
+    '''
+
+# @app.route('/xss_script')
+# def xss_script():
+#     # return render_template('xss_script.html')
+#     user_input = request.args.get('name', '')  
+#     if user_input:
+#         attack_logs.append({
+#             'attack_type':  'XSS',
+#             'payload':      user_input,
+#             'result':       'result',
+#             'status_code':  200,
+#             'timestamp':    datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+#         })
+#     return '''
+#     <html>
+#     <head><title>Script Injection XSS</title></head>
+#     <body>
+#         <h1>Script Injection XSS</h1>
+#         <p>Enter your name:</p>
+#         <form action="/xss_script" method="GET">
+#             <input type="text" name="name">
+#             <input type="submit" value="Submit">
+#         </form>
+#         <p>Response:</p>
+#         <div>{}</div>
+#     </body>
+#     </html>
+#     '''.format(request.args.get('name', ''))
 
 @app.route('/xss_img')
 def xss_img():
@@ -209,7 +246,7 @@ def trigger_crawl():
 @app.route('/logs')
 def logs():
     table_rows = ''.join(
-        f"<tr><td>{log['timestamp']}</td><td>{log['attack_type']}</td><td>{log['payload']}</td><td>{log['result']}</td><td>{log['status_code']}</td></tr>"
+        f"<tr><td>{html.escape(log['timestamp'])}</td><td>{html.escape(log['attack_type'])}</td><td>{html.escape(log['payload'])}</td><td>{html.escape(log['result'])}</td><td>{html.escape(str(log['status_code']))}</td></tr>"
         for log in attack_logs
     )
     html_content = f'''
@@ -309,6 +346,7 @@ def trigger_sqli_crawl():
     return 'SQL Injection Crawl initiated in background', 202
 
 
+
 @app.route('/trigger-mali-crawl')
 def trigger_mali_crawl():
     scrapy_project_dir = os.path.join(os.getcwd(), 'malicious_crawler')
@@ -396,30 +434,41 @@ def malware_results():
 @app.route('/trigger-xss-crawl')
 def trigger_xss_crawl():
     scrapy_project_dir = os.path.join(os.getcwd(), 'xss_crawler')
-
-    # 1) Run the spider, dumping into results.json
-    subprocess.run([
+    subprocess.Popen([
         sys.executable, '-m', 'scrapy', 'crawl', 'xss_playwright',
         '-s', 'USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
-        '-s', 'ROBOTSTXT_OBEY=False',
-        '-o', 'results.json'
-    ], cwd=scrapy_project_dir, check=True)
+        '-s', 'ROBOTSTXT_OBEY=False'
+    ], cwd=scrapy_project_dir)
+    return 'XSS Crawl initiated in background', 202
 
-    # 2) Read results.json and append each entry with Success/Failure
-    results_path = os.path.join(scrapy_project_dir, '/workspaces/ScrapyShield/xss_crawler/results.json')
-    with open(results_path, 'r') as f:
-        entries = json.load(f)
 
-    for e in entries:
-        attack_logs.append({
-            'attack_type': 'XSS',
-            'payload':     e.get('payload', ''),
-            'result':      'Success' if e.get('xss_triggered') else 'Failure',
-            'status_code': 200,
-            'timestamp':   datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        })
+# @app.route('/trigger-xss-crawl')
+# def trigger_xss_crawl():
+#     scrapy_project_dir = os.path.join(os.getcwd(), 'xss_crawler')
 
-    return 'XSS Crawl completed and logged', 200
+#     # 1) Run the spider, dumping into results.json
+#     subprocess.run([
+#         sys.executable, '-m', 'scrapy', 'crawl', 'xss_playwright',
+#         '-s', 'USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+#         '-s', 'ROBOTSTXT_OBEY=False',
+#         '-o', 'results.json'
+#     ], cwd=scrapy_project_dir, check=True)
+
+#     # 2) Read results.json and append each entry with Success/Failure
+#     results_path = os.path.join(scrapy_project_dir, '/workspaces/ScrapyShield/xss_crawler/results.json')
+#     with open(results_path, 'r') as f:
+#         entries = json.load(f)
+
+#     for e in entries:
+#         attack_logs.append({
+#             'attack_type': 'XSS',
+#             'payload':     e.get('payload', ''),
+#             'result':      'Success' if e.get('xss_triggered') else 'Failure',
+#             'status_code': 200,
+#             'timestamp':   datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+#         })
+
+#     return 'XSS Crawl completed and logged', 200
 
 # @app.route('/trigger-xss-crawl')
 # def trigger_xss_crawl():
