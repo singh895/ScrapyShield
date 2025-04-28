@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, send_file, abort, make_response, send_from_directory
 attack_logs = []
+import json
+from datetime import datetime
 from werkzeug.utils import secure_filename
 
 
@@ -38,6 +40,14 @@ def xss():
 def xss_script():
     # return render_template('xss_script.html')
     user_input = request.args.get('name', '')  
+    # if user_input:
+    #     attack_logs.append({
+    #         'attack_type':  'XSS',
+    #         'payload':      user_input,
+    #         'result':       xss_triggered,
+    #         'status_code':  200,
+    #         'timestamp':    datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    #     })
     return '''
     <html>
     <head><title>Script Injection XSS</title></head>
@@ -255,6 +265,19 @@ def logs():
                         alert('Error: ' + error);
                     }});
             }}
+            function triggerXSSCrawl() {{
+                fetch('/trigger-xss-crawl')
+                    .then(response => {{
+                        if (response.ok) {{
+                            alert('XSS Crawl Started!');
+                        }} else {{
+                            alert('Failed to start crawl.');
+                        }}
+                    }})
+                    .catch(error => {{
+                        alert('Error: ' + error);
+                    }});
+            }}
         </script>
     </head>
     <body>
@@ -262,6 +285,7 @@ def logs():
         <button class="button" onclick="triggerCrawl()">Trigger SQLi Crawl</button>
         <button class="button" onclick="triggerMaliCrawl()">Trigger Malware Crawl</button>
         <a href="/malware-results" target="_blank" class="button blue">View Malware Crawl Results</a>
+        <button class="button" onclick="triggerXSSCrawl()">Trigger XSS Crawl</button>
         <table>
             <tr><th>Timestamp</th><th>Attack Type</th><th>Payload</th><th>Result</th><th>Status Code</th></tr>
             {table_rows}
@@ -358,7 +382,71 @@ def malware_results():
     """
     return html_content
 
+# @app.route('/trigger-xss-crawl')
+# def trigger_xss_crawl():
+#     scrapy_project_dir = os.path.join(os.getcwd(), 'xss_crawler')
+#     subprocess.Popen([
+#         sys.executable, '-m', 'scrapy', 'crawl', 'xss_playwright',
+#         '-s', 'USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+#         '-s', 'ROBOTSTXT_OBEY=False'
+#     ], cwd=scrapy_project_dir)
+#     return 'XSS Crawl initiated in background', 202
 
+
+@app.route('/trigger-xss-crawl')
+def trigger_xss_crawl():
+    scrapy_project_dir = os.path.join(os.getcwd(), 'xss_crawler')
+
+    # 1) Run the spider, dumping into results.json
+    subprocess.run([
+        sys.executable, '-m', 'scrapy', 'crawl', 'xss_playwright',
+        '-s', 'USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+        '-s', 'ROBOTSTXT_OBEY=False',
+        '-o', 'results.json'
+    ], cwd=scrapy_project_dir, check=True)
+
+    # 2) Read results.json and append each entry with Success/Failure
+    results_path = os.path.join(scrapy_project_dir, '/workspaces/ScrapyShield/xss_crawler/results.json')
+    with open(results_path, 'r') as f:
+        entries = json.load(f)
+
+    for e in entries:
+        attack_logs.append({
+            'attack_type': 'XSS',
+            'payload':     e.get('payload', ''),
+            'result':      'Success' if e.get('xss_triggered') else 'Failure',
+            'status_code': 200,
+            'timestamp':   datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        })
+
+    return 'XSS Crawl completed and logged', 200
+
+# @app.route('/trigger-xss-crawl')
+# def trigger_xss_crawl():
+#     scrapy_project_dir = os.path.join(os.getcwd(), 'xss_crawler')
+#     # 1) Run the spider and dump results to results.json
+#     subprocess.run([
+#         sys.executable, '-m', 'scrapy', 'crawl', 'xss_playwright',
+#         '-s', 'USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+#         '-s', 'ROBOTSTXT_OBEY=False',
+#         '-o', 'results.json'
+#     ], cwd=scrapy_project_dir, check=True)
+
+#     # 2) Read the JSON and append to attack_logs
+#     results_path = os.path.join(scrapy_project_dir, 'results.json')
+#     with open(results_path, 'r') as f:
+#         entries = json.load(f)
+
+#     for e in entries:
+#         attack_logs.append({
+#             'attack_type': 'XSS',
+#             'payload':      e.get('payload', ''),
+#             'result':       'Success' if e.get('xss_triggered') else 'Failure',
+#             'status_code':  200,
+#             'timestamp':    datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+#         })
+
+#     return 'XSS Crawl completed and logged', 200
 
 if __name__ == "__main__":
     app.run(port= 5001, debug=True, host='0.0.0.0')
