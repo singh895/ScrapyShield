@@ -1,24 +1,27 @@
 import scrapy
 from urllib.parse import urljoin
+from datetime import datetime
 
 class MaliSpiderSpider(scrapy.Spider):
     name = "mali_spider"
     allowed_domains = ["localhost"]
-    start_urls = ["http://localhost:5000/malware"]  # Change port if needed
+    start_urls = ["http://localhost:5000/malware"]
 
     def parse(self, response):
-        # Find the download link
-        download_link = response.css('a.btn-download::attr(href)').get()
-        if download_link:
-            # Make the link absolute
-            file_url = urljoin(response.url, download_link)
-            self.log(f"Found download link: {file_url}")
-            # Yield a request to download the file, with a callback to save it
-            yield scrapy.Request(file_url, callback=self.save_file)
+        # Find all download links
+        download_links = response.css('a.btn-download::attr(href)').getall()
+        for link in download_links:
+            file_url = urljoin(response.url, link)
+            filename = link.split('/')[-1]
+            yield scrapy.Request(file_url, callback=self.save_file, cb_kwargs={'filename': filename})
 
-    def save_file(self, response):
-        # Save the file to disk
-        filename = "MalwareSimulation.exe"
+    def save_file(self, response, filename):
         with open(filename, 'wb') as f:
             f.write(response.body)
-        self.log(f"Downloaded file saved as {filename}")
+        yield {
+            'timestamp': datetime.now().isoformat(),  # Add ISO-formatted timestamp
+            'url': response.url,
+            'filename': filename,
+            'status': 'downloaded',
+            'size_bytes': len(response.body)
+        }
