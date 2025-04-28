@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -40,4 +40,75 @@
     </ul>
     <p><a href="/">← Back to Home</a></p>
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>XSS Attack Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Link your existing CSS (Tailwind/Bootstrap/etc.) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <style>
+      /* quick card‐grid if you need it */
+      .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 1.5rem; max-width: 960px; margin: 2rem auto; }
+      .card { background: white; border-radius: .5rem; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; }
+      .card h3 { margin-bottom: .75rem; }
+      .btn { display: inline-block; padding: .6rem 1.2rem; border: none; border-radius: .3rem; cursor: pointer; }
+      .btn-danger { background: #d9534f; color: white; }
+    </style>
+  </head>
+  <body>
+    <header style="background: #2c3e50; color: white; padding: 2rem 0; text-align: center;">
+      <h1>XSS Attack Dashboard</h1>
+      <p>Launch your Scrapy-Playwright XSS tests with one click.</p>
+    </header>
+
+
+  <!-- ────────────── Explanatory Info ────────────── -->
+  <section style="max-width:800px; margin:2rem auto; line-height:1.6;">
+    <h2>What We’re Testing</h2>
+    <ul>
+      <li><strong>&lt;script&gt; Injection</strong>: can we inject a raw &lt;script&gt; tag?</li>
+      <li><strong>Attribute Break-Out</strong>: e.g. <code>'"><script>…</script></code> to escape an attribute context.</li>
+      <li><strong>Event-Handler Vectors</strong>: SVG <code>onload</code>, &lt;details open&gt; <code>ontoggle</code>, IMG <code>onerror</code>, etc.</li>
+      <li><strong>Data-URI Scripts</strong>: loading &lt;script src="data:…"&gt; to bypass CSP.</li>
+      <li><strong>Autofocus Triggers</strong>: <code>&lt;textarea autofocus onfocus=alert()&gt;</code> or similar.</li>
+    </ul>
+    <h2>How to Interpret Results</h2>
+    <p><strong>Success</strong> means that the headless browser actually executed the injected code (we captured an <code>alert()</code> call).  
+    <strong>Failure</strong> means it was either sanitized/escaped or the event never fired.</p>
+  </section>
+  <!-- ──────────────────────────────────────────────── -->
+
+    <main class="grid">
+      <!-- XSS Crawl Card -->
+      <div class="card">
+        <h3>Script Injection XSS</h3>
+        <p>Run the full suite of payloads against <code>/xss_script</code>.</p>
+        <button class="btn btn-danger" onclick="triggerXSSCrawl()">
+          Trigger XSS Crawl
+        </button>
+      </div>
+    </main>
+
+    <script>
+      function triggerXSSCrawl() {
+        fetch('/trigger-xss-crawl')      // GET by default
+        .then(response => {
+            if (response.ok) {
+            alert('XSS Crawl Started! Now opening logs…');
+            // open logs in a new window/tab
+            window.open('/logs', '_blank');
+            } else {
+            alert('Failed to start XSS Crawl.');
+            }
+        })
+        .catch(error => {
+            alert('Error starting crawl: ' + error);
+        });
+    }
+    </script>
+  </body>
 </html>
