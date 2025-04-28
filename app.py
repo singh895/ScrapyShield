@@ -1,14 +1,17 @@
-from flask import Flask, render_template, request, send_file, abort, make_response
+from flask import Flask, render_template, request, send_file, abort, make_response, send_from_directory
 attack_logs = []
 import json
 from datetime import datetime
+from werkzeug.utils import secure_filename
 
+import html
 import html
 import os
 import sqlite3
 import random, string
 import subprocess
 import sys
+import json
 
 app = Flask(__name__, template_folder="src/template", static_folder="src/static")
 
@@ -175,36 +178,53 @@ def malware():
 
 DOWNLOADS_DIR = os.path.abspath('/workspaces/ScrapyShield/mali_crawler/dist/')
 
-@app.route('/download/MalwareSimulation.exe')
-def malwareDownload():
-    try:
-        # Path to the file
-        file_path = os.path.join(DOWNLOADS_DIR, 'MalwareSimulation.exe')
+# @app.route('/download/MalwareSimulation.exe')
+# def malwareDownload():
+#     try:
+#         # Path to the file
+#         file_path = os.path.join(DOWNLOADS_DIR, 'MalwareSimulation.exe')
 
-        # Check if the file exists
-        if not os.path.isfile(file_path):
-            abort(404, description="File not found")
+#         # Check if the file exists
+#         if not os.path.isfile(file_path):
+#             abort(404, description="File not found")
 
-        # Serve the file securely
-        response = make_response(send_file(
-            file_path,
-            mimetype='application/vnd.microsoft.portable-executable',
-            as_attachment=True,
-            download_name='MalwareSimulation.exe'
-        ))
+#         # Serve the file securely
+#         response = make_response(send_file(
+#             file_path,
+#             mimetype='application/vnd.microsoft.portable-executable',
+#             as_attachment=True,
+#             download_name='MalwareSimulation.exe'
+#         ))
 
-        # Add security headers
+#         # Add security headers
+#         response.headers.extend({
+#             'X-Content-Type-Options': 'nosniff',
+#             'Content-Security-Policy': "default-src 'none'",
+#             'X-Simulation-Malware': 'true'
+#         })
+
+#         return response
+
+@app.route('/download/<path:filename>')
+def download_file(filename):
+    # Secure the filename to prevent directory traversal attacks
+    safe_filename = secure_filename(filename)
+    file_path = os.path.join(DOWNLOADS_DIR, safe_filename)
+    if not os.path.isfile(file_path):
+        abort(404, description="File not found")
+    response = make_response(send_from_directory(DOWNLOADS_DIR, safe_filename, as_attachment=True))
+    # Optional: Add custom headers for malware files
+    if safe_filename == "MalwareSimulation.exe":
         response.headers.extend({
             'X-Content-Type-Options': 'nosniff',
             'Content-Security-Policy': "default-src 'none'",
             'X-Simulation-Malware': 'true'
         })
+    return response
 
-        return response
-
-    except Exception as e:
-        # Handle errors gracefully
-        abort(500, description=f"Error serving file: {str(e)}")
+    # except Exception as e:
+    #     # Handle errors gracefully
+    #     abort(500, description=f"Error serving file: {str(e)}")
 
 
 @app.route('/disguised_download')
@@ -251,7 +271,10 @@ def logs():
                 color: white;
                 border: none;
                 border-radius: 5px;
+                text-align: center;
+                text-decoration: none;
             }}
+            .button.blue {{ background-color: #2196F3; }}
         </style>
         <script>
             function triggerCrawl() {{
@@ -259,6 +282,19 @@ def logs():
                     .then(response => {{
                         if (response.ok) {{
                             alert('SQL Injection Crawl Started!');
+                        }} else {{
+                            alert('Failed to start crawl.');
+                        }}
+                    }})
+                    .catch(error => {{
+                        alert('Error: ' + error);
+                    }});
+            }}
+            function triggerMaliCrawl() {{
+                fetch('/trigger-mali-crawl')
+                    .then(response => {{
+                        if (response.ok) {{
+                            alert('Malware Crawl Started!');
                         }} else {{
                             alert('Failed to start crawl.');
                         }}
@@ -285,6 +321,8 @@ def logs():
     <body>
         <h2 style="text-align:center;">Attack Logs</h2>
         <button class="button" onclick="triggerCrawl()">Trigger SQLi Crawl</button>
+        <button class="button" onclick="triggerMaliCrawl()">Trigger Malware Crawl</button>
+        <a href="/malware-results" target="_blank" class="button blue">View Malware Crawl Results</a>
         <button class="button" onclick="triggerXSSCrawl()">Trigger XSS Crawl</button>
         <table>
             <tr><th>Timestamp</th><th>Attack Type</th><th>Payload</th><th>Result</th><th>Status Code</th></tr>
@@ -294,6 +332,7 @@ def logs():
     </html>
     '''
     return html_content
+
 
 
 
