@@ -346,6 +346,92 @@ def trigger_sqli_crawl():
     ], cwd=scrapy_project_dir)
     return 'SQL Injection Crawl initiated in background', 202
 
+
+
+@app.route('/trigger-mali-crawl')
+def trigger_mali_crawl():
+    scrapy_project_dir = os.path.join(os.getcwd(), 'malicious_crawler')
+    subprocess.Popen([
+        sys.executable, '-m', 'scrapy', 'crawl', 'mali_spider',
+        '-O', 'malware_results.json',
+        '-s', 'USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+        '-s', 'ROBOTSTXT_OBEY=False'
+    ], cwd=scrapy_project_dir)
+    return 'Malware Crawl initiated in background', 202
+
+@app.route('/malware-results')
+def malware_results():
+    results_path = os.path.join(os.getcwd(), 'malicious_crawler', 'malware_results.json')
+    if not os.path.exists(results_path):
+        return "No results yet. Run the crawl first!", 404
+    
+    with open(results_path) as f:
+        data = json.load(f)
+
+    # Define column order and friendly names
+    columns = [
+        ('timestamp', 'Time Downloaded'),
+        ('filename', 'File Name'),
+        ('size_bytes', 'File Size'),
+        ('url', 'Download URL'),
+        ('status', 'Status')
+    ]
+
+    # Build table headers
+    table_headers = "<tr>" + "".join(f"<th>{display}</th>" for _, display in columns) + "</tr>"
+
+    # Build table rows with formatted values
+    table_rows = []
+    for row in data:
+        cells = []
+        for key, _ in columns:
+            value = row.get(key, '')
+            if key == 'timestamp':
+                value = datetime.fromisoformat(value).strftime('%Y-%m-%d %H:%M:%S')
+            elif key == 'size_bytes':
+                value = f"{round(value/1024, 2)} KB"
+            cells.append(f"<td>{value}</td>")
+        table_rows.append(f"<tr>{''.join(cells)}</tr>")
+    
+    table_rows = ''.join(table_rows)
+
+    html_content = f"""
+    <html>
+    <head>
+        <title>Malware Crawl Results</title>
+        <style>
+            body {{ font-family: Arial, sans-serif; background: #f8f8f8; }}
+            table {{ border-collapse: collapse; width: 90%; margin: 40px auto; 
+                    background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }}
+            th, td {{ border: 1px solid #ddd; padding: 12px; text-align: left; }}
+            th {{ background: #2c3e50; color: #fff; }}
+            tr:nth-child(even) {{ background: #f9f9f9; }}
+            h2 {{ text-align: center; margin: 40px 0; color: #2c3e50; }}
+            .size {{ text-align: right; }}
+        </style>
+    </head>
+    <body>
+        <h2>📁 Malware Crawl Results</h2>
+        <table>
+            {table_headers}
+            {table_rows}
+        </table>
+    </body>
+    </html>
+    """
+    return html_content
+
+# @app.route('/trigger-xss-crawl')
+# def trigger_xss_crawl():
+#     scrapy_project_dir = os.path.join(os.getcwd(), 'xss_crawler')
+#     subprocess.Popen([
+#         sys.executable, '-m', 'scrapy', 'crawl', 'xss_playwright',
+#         '-s', 'USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+#         '-s', 'ROBOTSTXT_OBEY=False'
+#     ], cwd=scrapy_project_dir)
+#     return 'XSS Crawl initiated in background', 202
+
+
 @app.route('/trigger-xss-crawl')
 def trigger_xss_crawl():
     scrapy_project_dir = os.path.join(os.getcwd(), 'xss_crawler')
