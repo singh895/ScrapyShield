@@ -5,7 +5,7 @@ from datetime import datetime
 class MaliSpiderSpider(scrapy.Spider):
     name = "mali_spider"
     allowed_domains = ["localhost"]
-    start_urls = ["http://localhost:5001/malware"]
+    start_urls = ["http://localhost:5000/malware"]
 
     def parse(self, response):
         # Find all download links
