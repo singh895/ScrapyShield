@@ -14,13 +14,52 @@
 
 % background.tex
 % \section{Background and Related Work}
-Web crawling and security intersect in only a few niche studies. Classic XSS detection frameworks like GAXSS use genetic algorithms to evolve attack strings~\cite{dong2023behind}. Server‐side defenses against SQLi frequently employ parameterized queries and machine‐learning classifiers~\cite{least-weird-forum-user}, but these approaches focus on protecting applications, not the crawlers that consume them. Malware propagation via automated agents has been analyzed in “The Ghost in the Browser”~\cite{gupta2021ghost}, revealing how drive-by downloads can bypass naïve HTTP clients.
+% Web crawling and security intersect in only a few niche studies. Classic XSS detection frameworks like GAXSS use genetic algorithms to evolve attack strings~\cite{dong2023behind}. Server‐side defenses against SQLi frequently employ parameterized queries and machine‐learning classifiers~\cite{least-weird-forum-user}, but these approaches focus on protecting applications, not the crawlers that consume them. Malware propagation via automated agents has been analyzed in “The Ghost in the Browser”~\cite{gupta2021ghost}, revealing how drive-by downloads can bypass naïve HTTP clients.
 
-\subsection{Project Goals}
-We aim to build a reusable, sandboxed testing harness that:
-\begin{itemize}
-  \item Simulates SQLi, XSS, and malware downloads in a controlled Flask environment.
-  \item Adapts Scrapy spiders (including headless‐Playwright for XSS) to exercise each vulnerability.
-  \item Captures detailed logs of payload transmission, script execution, and file retrieval.
-  \item Surfaces gaps in Scrapy’s default defenses and suggests mitigation layers.
+% \subsection{Project Goals}
+% We aim to build a reusable, sandboxed testing harness that:
+% \begin{itemize}
+%   \item Simulates SQLi, XSS, and malware downloads in a controlled Flask environment.
+%   \item Adapts Scrapy spiders (including headless‐Playwright for XSS) to exercise each vulnerability.
+%   \item Captures detailed logs of payload transmission, script execution, and file retrieval.
+%   \item Surfaces gaps in Scrapy’s default defenses and suggests mitigation layers.
+% \end{itemize}
+% in your preamble
+
+
+\subsection*{i) Web Crawler Security Threats}
+Web crawlers were originally designed to fetch and index information efficiently, with little attention to adversarial behavior in the wild. However, as crawlers interact with increasingly dynamic, user‐driven content, they face security threats typically associated with client‐side applications. Common attack vectors include:
+
+\begin{itemize}[topsep=4pt,itemsep=2pt]
+  \item \textbf{SQL Injection (SQLi):} Malicious inputs submitted via forms can alter or bypass server‐side logic.
+  \item \textbf{Cross‐Site Scripting (XSS):} JavaScript payloads embedded in pages may execute in the crawler’s context.
+  \item \textbf{Malware Downloads:} Files presented for download may be disguised executables that a crawler will fetch without validation.
 \end{itemize}
+
+A crawler that processes these inputs without proper validation can compromise itself and downstream systems.
+
+\subsection*{ii) Related Work in Detecting Web Threats}
+Several studies have addressed the detection of web‐application vulnerabilities:
+
+\begin{itemize}[topsep=4pt,itemsep=2pt]
+  \item \textbf{Cross‐Site Scripting (XSS):} The GAXSS framework introduced a genetic algorithm for generating XSS payloads~\cite{gaxss}.
+  \item \textbf{SQL Injection (SQLi):} Supervised machine‐learning classifiers for SQLi detection have been proposed to secure server‐side filtering~\cite{sqli‐ml}.
+  \item \textbf{Malware Downloads:} “The Ghost in the Browser” explored drive‐by download mechanisms where malicious files are delivered through innocuous pages~\cite{ghost‐browser}.
+\end{itemize}
+
+These works illustrate effective detection on the server or browser side, but rarely consider passive crawlers acting as middlemen.
+
+\subsection*{iii) Projects on Crawler Security}
+Notable tools automating web‐vulnerability discovery include:
+
+\begin{itemize}[topsep=4pt,itemsep=2pt]
+  \item \textbf{Web Vulnerability Finder (WVF):} A black‐box scanner detecting XSS and SQLi without source code access~\cite{wvf}.
+  \item \textbf{GraphXSS:} Uses graph convolutional networks to classify malicious XSS payloads in documents~\cite{graphxss}.
+  \item \textbf{OWASP ZAP:} An active‐scanning framework for application security testing, not specifically designed for crawler behavior~\cite{owasp2023zap}.
+\end{itemize}
+
+While valuable for server/app security, none systematically evaluate a crawler’s own resilience to hostile inputs.
+
+\subsection*{iv) Gaps in Existing Literature}
+Existing research overwhelmingly targets server‐side defense or user‐facing application hardening. There is a dearth of systematic evaluations of web crawlers’ resilience in adversarial content environments. Most frameworks—including Scrapy—are assumed to be passive agents, yet under hostile conditions their naïve processing can introduce new vulnerabilities into downstream systems. Our work fills this gap by directly testing Scrapy against controlled malicious environments and proposing mitigation strategies tailored to crawler architectures.
+

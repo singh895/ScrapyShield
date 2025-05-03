@@ -109,7 +109,9 @@
 \IEEEoverridecommandlockouts
 
 % --- Packages ---
-\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{grffile} 
+\usepackage[numbers,sort&compress]{natbib}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb,amsfonts}
@@ -120,7 +122,8 @@
 \usepackage{tcolorbox}
 \usepackage{xcolor}
 \usepackage{paralist}
-\usepackage{natbib}
+\usepackage{enumitem}
+\usepackage{underscore}
 \usepackage{minted}               % ← for code listings
 
 % define BibTeX command
@@ -128,10 +131,10 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 % --- Author / Title ---
-\title{[Project Title]\\Final Project Report for ECE59595-ASE}
+\title{[Scrapy Shield]\\Final Project Report for ECE59595-ASE}
 \author{\IEEEauthorblockN{Saanvi Singh, Yoon Uhr, Purva Grover}
 \IEEEauthorblockA{Elmore Family School of ECE, Purdue University\\
-\{singh895, yuhr, grover34\}@purdue.edu}}
+\\singh895@purdue.edu, yuhr@purdue.edu, grover34@purdue.edu}}
 
 \begin{document}
 \maketitle
@@ -164,10 +167,11 @@
 
 % --- Conclusion ---
 \section{Conclusion}
-\input{sections/conclusion.tex}
+\input{sections/conclusions.tex}
 
 % --- Bibliography ---
-\bibliographystyle{plain}
+\bibliographystyle{IEEEtran}
+\nocite{*}
 \bibliography{bibdata}
 
 \end{document}
