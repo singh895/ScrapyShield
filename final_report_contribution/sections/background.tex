@@ -1,13 +1,26 @@
-Provide some information about the literature that you used to develop your project. Aim for a handful of paragraphs. 
-Don't go too hard. 
-If this is taking more than half a page (1-column), you're doing too much.
+% Provide some information about the literature that you used to develop your project. Aim for a handful of paragraphs. 
+% Don't go too hard. 
+% If this is taking more than half a page (1-column), you're doing too much.
 
-This is a building project, so making sure that you provide a relationship between the work that you're doing and the topics from the class that's the most important part of this section.
-I'm adding one citation of an academic article here~\cite{dong2023behind} and a website here~\cite{least-weird-forum-user} so you know how citations look like.
+% This is a building project, so making sure that you provide a relationship between the work that you're doing and the topics from the class that's the most important part of this section.
+% I'm adding one citation of an academic article here~\cite{dong2023behind} and a website here~\cite{least-weird-forum-user} so you know how citations look like.
+
+% \subsection{Project Goals}
+
+% Please outline what exactly are you building.
+% This is probably easy if for example you have a good description of the GitHub issue or so.
+% Please be as explicit as possible, don't aim to say too much.
+% For example, if the task was ``we basically had to figure out where to put this one line of code but hoo boy was it hard'' that's great --- tell me that.
+
+% background.tex
+% \section{Background and Related Work}
+Web crawling and security intersect in only a few niche studies. Classic XSS detection frameworks like GAXSS use genetic algorithms to evolve attack strings~\cite{dong2023behind}. Server‐side defenses against SQLi frequently employ parameterized queries and machine‐learning classifiers~\cite{least-weird-forum-user}, but these approaches focus on protecting applications, not the crawlers that consume them. Malware propagation via automated agents has been analyzed in “The Ghost in the Browser”~\cite{gupta2021ghost}, revealing how drive-by downloads can bypass naïve HTTP clients.
 
 \subsection{Project Goals}
-
-Please outline what exactly are you building.
-This is probably easy if for example you have a good description of the GitHub issue or so.
-Please be as explicit as possible, don't aim to say too much.
-For example, if the task was ``we basically had to figure out where to put this one line of code but hoo boy was it hard'' that's great --- tell me that.
+We aim to build a reusable, sandboxed testing harness that:
+\begin{itemize}
+  \item Simulates SQLi, XSS, and malware downloads in a controlled Flask environment.
+  \item Adapts Scrapy spiders (including headless‐Playwright for XSS) to exercise each vulnerability.
+  \item Captures detailed logs of payload transmission, script execution, and file retrieval.
+  \item Surfaces gaps in Scrapy’s default defenses and suggests mitigation layers.
+\end{itemize}

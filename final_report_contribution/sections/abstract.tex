@@ -1,6 +1,5 @@
-Abstract goes here.
-
-Please give an overview of the project, do make sure you include the following:
-1) What is the problem statement, why does this matter? (I recommend 1 paragraph here)
-2) Provide a view of the insight (e.g., we can do x to obtain a yy benefit, or we can measure i to understand j better) 
-3) Close with a bit of an overview of the results (e.g., our methods outperform the state of the art by XX\%)
+% abstract.tex
+% \begin{abstract}
+Automated web crawlers such as Scrapy are indispensable for search engines, market research, and data mining, yet their resilience to hostile inputs—like SQL Injection, Cross‐Site Scripting (XSS), and drive‐by malware downloads—has received little scrutiny. In this work, we simulate these attacks in a sandboxed Flask environment, hosting deliberately vulnerable endpoints, and drive customized Scrapy spiders against them. By measuring how Scrapy handles crafted SQLi payloads, reflected XSS scripts (with a headless browser shim), and executable file downloads, we expose blind spots in its default pipeline. Our results show that Scrapy neither sanitizes malicious form submissions nor blocks inline event handlers when rendering JavaScript, and indiscriminately retrieves malicious binaries. We conclude by proposing lightweight security middleware and sandboxing strategies that can harden Scrapy for use in adversarial web ecosystems.
+    % \end{abstract}
+    

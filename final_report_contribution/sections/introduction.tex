@@ -1,7 +1,12 @@
-This section should include a broader overview of the work. All in all, spend a
-bit more time covering the elements of the abstract, and outline the work in a bit more depth.
+% This section should include a broader overview of the work. All in all, spend a
+% bit more time covering the elements of the abstract, and outline the work in a bit more depth.
 
-An introduction should help me understand what you did, why you did it the way
-you did, and why do you think the work is \emph{sound}.
+% An introduction should help me understand what you did, why you did it the way
+% you did, and why do you think the work is \emph{sound}.
 
-This section should probably be half a page to $\frac{3}{4}$ of a page.
+% This section should probably be half a page to $\frac{3}{4}$ of a page.
+%% introduction.tex
+% \section{Introduction}
+Web crawlers automate data collection at scales that humans cannot match, powering everything from search engines to academic studies. Scrapy, an open‐source Python framework, is favored for its speed, extensibility, and rich ecosystem. However, with great power comes risk: crawlers routinely traverse untrusted domains, submit forms, execute client‐side code, and download content without direct human oversight.
+
+While server‐side defenses against SQL Injection and XSS are well studied, the client‐side tools that fetch and render pages—especially those enhanced with JavaScript engines—are seldom examined for security. A crawler that naively injects payloads, runs reflected scripts, or saves malicious files can unwittingly become an attack vector into internal networks. In this project, we construct a malicious Flask server exposing SQLi, XSS, and malware‐download endpoints, then configure Scrapy spiders (including a Playwright‐enabled XSS spider) to interact with each. We log successes, failures, and raw payload traces in a live dashboard, providing the first systematic assessment of Scrapy’s security posture under active adversarial conditions.

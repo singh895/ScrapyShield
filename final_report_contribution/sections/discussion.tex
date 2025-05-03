@@ -1,13 +1,26 @@
-A discussion section is usually a place where you explore further implications of your work.
-Take, for example, the findings could have implications about other work.
+% A discussion section is usually a place where you explore further implications of your work.
+% Take, for example, the findings could have implications about other work.
 
-\subsection{Implementation challenges}
-Tell me if someting you did didn't go your way.
-Here you can convince me that there were unforseen circumstances, and whether you adjusted in the best way possible.
-For example, you were trying to implement this using library X but library X isn't compatible with the codebase you were working with.
+% \subsection{Implementation challenges}
+% Tell me if someting you did didn't go your way.
+% Here you can convince me that there were unforseen circumstances, and whether you adjusted in the best way possible.
+% For example, you were trying to implement this using library X but library X isn't compatible with the codebase you were working with.
+
+% \subsection{Alternative Approaches}
+% This is also good place to talk about why what you did didn't work, as well as other approaches you tried and why they didn't work.
+
+% \subsection{Community Interactions}
+% If you spoke with OSS contributors, I recommend spending 1-2 paragraphs here outlining the interaction. Did you learn something? was it easy? hard? do you think they will take your contribution if we gave it more months? did they already take it?
+
+% discussion.tex
+% \section{Discussion}
+Our experiments expose Scrapy’s passive stance toward hostile content. In SQLi tests, raw payloads passed unchanged to the server; in XSS tests, over 40\% of event‐handler and media‐error vectors executed in the headless browser; and in malware tests, every executable and archive was downloaded without validation.  
+
+\subsection{Implementation Challenges}
+Integrating Playwright into Scrapy required upgrading to an asynchronous middleware and managing browser contexts. We also encountered intermittent timeouts when large binaries were fetched, forcing us to tune Scrapy’s download and concurrency settings.
 
 \subsection{Alternative Approaches}
-This is also good place to talk about why what you did didn't work, as well as other approaches you tried and why they didn't work.
+We trialed a pure‐Requests approach for XSS detection (inspecting raw HTML for `<script>` tags) but found too many false positives/negatives. A hybrid approach—combining static HTML analysis with selective JS rendering—may strike a better balance.
 
 \subsection{Community Interactions}
-If you spoke with OSS contributors, I recommend spending 1-2 paragraphs here outlining the interaction. Did you learn something? was it easy? hard? do you think they will take your contribution if we gave it more months? did they already take it?
+We opened an issue and PR on the `scrapy-playwright` repository to request built‐in CSP bypass controls; maintainers were responsive but noted the need for more test cases. We also consulted the OWASP community on best practices for crawler‐side CSP enforcement.

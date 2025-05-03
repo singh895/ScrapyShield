@@ -1,9 +1,114 @@
+% % \documentclass[conference]{IEEEtran}
 % \documentclass[conference]{IEEEtran}
+% \IEEEoverridecommandlockouts
+% % \documentclass[sigconf,review,anonymous]{acmart}
+% % \acmConference[MSR 2024]{21st International Conference on Mining Software Repositories}{April 2024}{Lisbon, Portugal}
+% % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+% \usepackage{cite}
+% \usepackage[T1]{fontenc}
+% \usepackage[utf8]{inputenc}
+% \usepackage{amsmath,amssymb,amsfonts}
+% \usepackage{algorithmic}
+% \usepackage{graphicx}
+% \usepackage{textcomp}
+% \usepackage{natbib}
+% \usepackage{xcolor}
+% \usepackage{paralist}
+% \usepackage{url}
+% \definecolor{light-gray}{gray}{0.95}
+% \usepackage{tcolorbox}
+
+
+% \usepackage{minted}
+% \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+%     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% \begin{document}
+
+
+% \newcommand{\santiago}[1]{{\color{red} #1}}
+% \newcommand{\sahithi}[1]{{\color{cyan} #1}}
+% \newcommand{\abhi}[1]{{\color{blue} #1}}
+
+% % \title{A Unified Data Model For Mining and Tracing OSS Supply-Chains}
+% \title{[Project Title]\\
+% 	\texttt{\large Final Project Report for ECE59595-ASE}}
+
+
+% % Author block bits, see below for multi-author styles, please add every teammate here
+% \author{\IEEEauthorblockN{Saanvi Singh, Yoon Uhr, Purva Grover\\Purdue University, Elmore Family School of Electrical and Computer Engineering\\singh895@purdue.edu, yuhr@purdue.edu, grover34@purdue.edu}
+% %\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+% %\textit{name of organization (of Aff.)}\\
+% %City, Country \\
+% %email address or ORCID}
+% %\and
+% %\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
+% %\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+% %\textit{name of organization (of Aff.)}\\
+% %City, Country \\
+% %email address or ORCID}
+% %\and
+% %\IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
+% %\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+% %\textit{name of organization (of Aff.)}\\
+% %City, Country \\
+% %email address or ORCID}
+% %\and
+% %\IEEEauthorblockN{4\textsuperscript{th} Given Name Surname}
+% %\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+% %City, Country \\
+% %email address or ORCID}
+% %\and
+% %\IEEEauthorblockN{5\textsuperscript{th} Given Name Surname}
+% %\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+% %\textit{name of organization (of Aff.)}\\
+% %City, Country \\
+% %email address or ORCID}
+% %\and
+% %\IEEEauthorblockN{6\textsuperscript{th} Given Name Surname}
+% %\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+% %\textit{name of organization (of Aff.)}\\
+% %City, Country \\
+% %email address or ORCID}
+% }
+
+% \maketitle
+
+% \begin{abstract}
+% \input{./sections/abstract}
+% \end{abstract}
+
+% % this is in theory to index for IEEE access but I always liked it there :)
+% %I Wouldn't discount points if you remove it, however,
+% \begin{IEEEkeywords}
+%     keywords-here	
+% \end{IEEEkeywords}  
+
+% \section{Introduction}
+% \input{./sections/introduction}
+
+% \section{Background \& Stated Goals}
+% \input{./sections/background}
+
+% \section{Architecture \& Results}
+% \input{./sections/arch}
+
+% \section{Discussion}
+% \input{./sections/discussion}
+
+% \section{Conclusion}
+% \input{./sections/conclusions}
+
+
+% \bibliographystyle{plain}
+% \bibliography{./bibdata}
+
+% \end{document}
+
 \documentclass[conference]{IEEEtran}
 \IEEEoverridecommandlockouts
-% \documentclass[sigconf,review,anonymous]{acmart}
-% \acmConference[MSR 2024]{21st International Conference on Mining Software Repositories}{April 2024}{Lisbon, Portugal}
-% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+
+% --- Packages ---
 \usepackage{cite}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -11,96 +116,58 @@
 \usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{textcomp}
-\usepackage{natbib}
+\usepackage{url}
+\usepackage{tcolorbox}
 \usepackage{xcolor}
 \usepackage{paralist}
-\usepackage{url}
-\definecolor{light-gray}{gray}{0.95}
-\usepackage{tcolorbox}
+\usepackage{natbib}
+\usepackage{minted}               % ← for code listings
 
-
-\usepackage{minted}
+% define BibTeX command
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
+% --- Author / Title ---
+\title{[Project Title]\\Final Project Report for ECE59595-ASE}
+\author{\IEEEauthorblockN{Saanvi Singh, Yoon Uhr, Purva Grover}
+\IEEEauthorblockA{Elmore Family School of ECE, Purdue University\\
+\{singh895, yuhr, grover34\}@purdue.edu}}
+
 \begin{document}
-
-
-\newcommand{\santiago}[1]{{\color{red} #1}}
-\newcommand{\sahithi}[1]{{\color{cyan} #1}}
-\newcommand{\abhi}[1]{{\color{blue} #1}}
-
-% \title{A Unified Data Model For Mining and Tracing OSS Supply-Chains}
-\title{[Project Title]\\
-	\texttt{\large Final Project Report for ECE59595-ASE}}
-
-
-% Author block bits, see below for multi-author styles, please add every teammate here
-\author{\IEEEauthorblockN{Santiago Torres-Arias\\Purdue University, Elmore Family School of Electrical and Computer Engineering\\santiagotorres@purdue.edu}
-%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-%\textit{name of organization (of Aff.)}\\
-%City, Country \\
-%email address or ORCID}
-%\and
-%\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
-%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-%\textit{name of organization (of Aff.)}\\
-%City, Country \\
-%email address or ORCID}
-%\and
-%\IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
-%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-%\textit{name of organization (of Aff.)}\\
-%City, Country \\
-%email address or ORCID}
-%\and
-%\IEEEauthorblockN{4\textsuperscript{th} Given Name Surname}
-%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-%City, Country \\
-%email address or ORCID}
-%\and
-%\IEEEauthorblockN{5\textsuperscript{th} Given Name Surname}
-%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-%\textit{name of organization (of Aff.)}\\
-%City, Country \\
-%email address or ORCID}
-%\and
-%\IEEEauthorblockN{6\textsuperscript{th} Given Name Surname}
-%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-%\textit{name of organization (of Aff.)}\\
-%City, Country \\
-%email address or ORCID}
-}
-
 \maketitle
 
+% --- Abstract ---
 \begin{abstract}
-\input{./sections/abstract}
+  \input{sections/abstract.tex}
 \end{abstract}
 
-% this is in theory to index for IEEE access but I always liked it there :)
-%I Wouldn't discount points if you remove it, however,
+% --- Keywords (if desired) ---
 \begin{IEEEkeywords}
-    keywords-here	
-\end{IEEEkeywords}  
+  ScrapyShield, Web Crawler Security, SQLi, XSS, Malware Downloads
+\end{IEEEkeywords}
 
+% --- Introduction ---
 \section{Introduction}
-\input{./sections/introduction}
+\input{sections/introduction.tex}
 
+% --- Background and Goals ---
 \section{Background \& Stated Goals}
-\input{./sections/background}
+\input{sections/background.tex}
 
-\section{Architecture \& Results}
-\input{./sections/arch}
+% --- Architecture & Results ---
+\section{System Architecture and Results}
+\input{sections/arch.tex}
 
+% --- Discussion ---
 \section{Discussion}
-\input{./sections/discussion}
+\input{sections/discussion.tex}
 
+% --- Conclusion ---
 \section{Conclusion}
-\input{./sections/conclusions}
+\input{sections/conclusion.tex}
 
-
+% --- Bibliography ---
 \bibliographystyle{plain}
-\bibliography{./bibdata}
+\bibliography{bibdata}
 
 \end{document}

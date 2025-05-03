@@ -1,4 +1,8 @@
-Close the paper, review what you did, and close things up.
+% Close the paper, review what you did, and close things up.
 
-Where the abstract is usually a section telling us what you did and a ``teaser'' of the results, a conclusion would instead remind us of all of what you covered.
-You can think of a conclusion as a ``retrospective abstract.''
+% Where the abstract is usually a section telling us what you did and a ``teaser'' of the results, a conclusion would instead remind us of all of what you covered.
+% You can think of a conclusion as a ``retrospective abstract.''
+
+% conclusion.tex
+% \section{Conclusion}
+Our systematic evaluation shows that Scrapy, by default, offers no defenses against SQL Injection, Cross‐Site Scripting, or malicious file downloads. Crawler pipelines assume benign inputs: form payloads are unsanitized, event‐handlers execute unfiltered in a headless browser, and binaries are retrieved without scanning. To safely deploy Scrapy in adversarial settings, practitioners must layer in input validation, response‐pattern analysis, Content Security Policy enforcement, and sandboxed execution environments. Our ScrapyShield framework provides a reusable test harness to guide future hardening efforts and underscores the need for a security-first mindset when building web‐scale automation.

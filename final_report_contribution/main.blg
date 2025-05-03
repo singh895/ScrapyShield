@@ -1,48 +1,47 @@
-This is BibTeX, Version 0.99d (TeX Live 2025/Arch Linux)
+This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
-The style file: plain.bst
-Database file #1: ./bibdata.bib
-Warning--to sort, need author or key in least-weird-forum-user
-You've used 2 entries,
-            2118 wiz_defined-function locations,
-            506 strings with 4485 characters,
-and the built_in function-call counts, 845 in all, are:
-= -- 75
-> -- 49
-< -- 1
-+ -- 20
-- -- 18
-* -- 60
-:= -- 128
-add.period$ -- 5
-call.type$ -- 2
-change.case$ -- 15
+I found no \bibdata command---while reading file main.aux
+I found no \bibstyle command---while reading file main.aux
+You've used 3 entries,
+            0 wiz_defined-function locations,
+            86 strings with 532 characters,
+and the built_in function-call counts, 0 in all, are:
+= -- 0
+> -- 0
+< -- 0
++ -- 0
+- -- 0
+* -- 0
+:= -- 0
+add.period$ -- 0
+call.type$ -- 0
+change.case$ -- 0
 chr.to.int$ -- 0
-cite$ -- 3
-duplicate$ -- 30
-empty$ -- 65
-format.name$ -- 18
-if$ -- 181
+cite$ -- 0
+duplicate$ -- 0
+empty$ -- 0
+format.name$ -- 0
+if$ -- 0
 int.to.chr$ -- 0
-int.to.str$ -- 2
-missing$ -- 1
-newline$ -- 12
-num.names$ -- 2
-pop$ -- 26
-preamble$ -- 1
-purify$ -- 13
+int.to.str$ -- 0
+missing$ -- 0
+newline$ -- 0
+num.names$ -- 0
+pop$ -- 0
+preamble$ -- 0
+purify$ -- 0
 quote$ -- 0
-skip$ -- 26
+skip$ -- 0
 stack$ -- 0
-substring$ -- 42
-swap$ -- 12
-text.length$ -- 1
+substring$ -- 0
+swap$ -- 0
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 8
-warning$ -- 1
-while$ -- 5
-width$ -- 3
-write$ -- 20
-(There was 1 warning)
+type$ -- 0
+warning$ -- 0
+while$ -- 0
+width$ -- 0
+write$ -- 0
+(There were 2 error messages)
