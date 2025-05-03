@@ -1,0 +1,89 @@
+\section{Appendix}
+
+\subsection{Artifacts}
+\begin{itemize}[topsep=2pt,itemsep=2pt]
+  \item Controlled malicious website code (Flask/Django).
+  \item Scrapy crawler scripts for different attack simulations.
+  \item Log files of test runs.
+  \item Security analysis and vulnerability reports.
+\end{itemize}
+
+
+\subsection{Project Postmortem}
+
+\subsubsection*{Comparison of Proposal vs.\ Final Results}
+\begin{itemize}[topsep=2pt,itemsep=2pt]
+  \item \textbf{Process:} Closely aligned with the proposed timeline; only minor debugging adjustments needed.
+  \item \textbf{Outcomes:} Successful development of controlled malicious environment and preliminary security assessments.
+\end{itemize}
+
+\subsubsection*{Reflection on Progress}
+\begin{description}[leftmargin=1cm,style=nextline,itemsep=2pt]
+  \item[Going Well:]  
+    \begin{itemize}[topsep=0pt,itemsep=2pt]
+      \item Effective team collaboration and communication.
+      \item Tasks completed on schedule.
+      \item Debugging techniques effective.
+    \end{itemize}
+  \item[Challenges:]  
+    \begin{itemize}[topsep=0pt,itemsep=2pt]
+      \item Minor issues with handling blocking techniques.
+      \item Coordination delays during troubleshooting sessions.
+    \end{itemize}
+\end{description}
+
+\subsubsection*{Failures and Mitigations}
+\begin{enumerate}[label=Failure \arabic*:,leftmargin=* ,topsep=2pt,itemsep=4pt]
+  \item \textbf{Specific Failure:} Handling site blocks and anti-bot techniques.  
+        \textbf{Factors:} IP blacklisting; static User-Agent headers.  
+        \textbf{Mitigations:} IP rotation and User-Agent randomization.
+
+  \item \textbf{Specific Failure:} Unchecked malware downloads.  
+        \textbf{Factors:} Lack of file validation before downloads.  
+        \textbf{Mitigations:} Incorporate MIME type checks and antivirus API integrations before saving files.
+\end{enumerate}
+
+
+\subsection{Test Site Images}
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/home.png}
+  \caption{Home Page}
+  \label{fig:homeappendix}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/sqltest.png}
+  \caption{SQL Injection Test Site}
+  \label{fig:sqltestappendix}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/xssdash.png}
+  \caption{XSS Test Site}
+  \label{fig:xssdashappendix}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/maldash.png}
+  \caption{Malware Download Test Site}
+  \label{fig:maldashappendix}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/sqli.png}
+  \caption{SQL Injection Results}
+  \label{fig:sqliresultsappendix}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/malres.png}
+  \caption{Malware Crawl Results}
+  \label{fig:malresappendix}
+\end{figure*}
+

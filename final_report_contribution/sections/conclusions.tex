@@ -106,7 +106,7 @@ To evaluate Scrapy’s handling of malicious downloads, we created a spider for 
     \end{itemize}
 \end{enumerate}
 
-
+\section{Conclusion}
 \subsection{SQL Injection}
 Our evaluation demonstrates that Scrapy, in its default configuration, is vulnerable to interacting dangerously with hostile content.  Based on our SQL Injection testing, we conclude:
 \begin{itemize}
@@ -136,48 +136,3 @@ Regarding malware downloads, our evaluation concludes that:
 \end{itemize}
 
 These shortcomings suggest that while Scrapy remains an excellent framework for structured data collection, it requires significant security enhancements for use cases involving semi-trusted or hostile websites.  Our project contributes a reusable sandbox testing framework for future research and encourages a security-first mindset when deploying web crawlers.
-
-\section{Appendix}
-\subsection{Test Site Images}
-\begin{figure*}[!t]
-    \centering
-    \includegraphics[width=\textwidth]{figures/home.png}
-    \caption{Home Page}
-    \label{fig:architecture}
-    \end{figure*}
-    
-    \begin{figure*}[!t]
-    \centering
-    \includegraphics[width=\textwidth]{figures/sqltest.png}
-    \caption{SQL Injection Test Site}
-    \label{fig:architecture}
-    \end{figure*}
-    
-    \begin{figure*}[!t]
-    \centering
-    \includegraphics[width=\textwidth]{figures/xssdash.png}
-    \caption{XSS Test Site}
-    \label{fig:architecture}
-    \end{figure*}
-    
-    \begin{figure*}[!t]
-    \centering
-    \includegraphics[width=\textwidth]{figures/maldash.png}
-    \caption{Malware Download Test Site}
-    \label{fig:architecture}
-    \end{figure*}
-    
-  
-    \begin{figure*}[!t]
-        \centering
-        \includegraphics[width=\textwidth]{figures/sqli.png}
-        \caption{SQL Injection Results.}
-        \label{fig:architecture}
-      \end{figure*}
-    
-      \begin{figure*}[!t]
-        \centering
-        \includegraphics[width=\textwidth]{figures/malres.png}
-        \caption{Malware Crawl Results.}
-        \label{fig:architecture}
-      \end{figure*}

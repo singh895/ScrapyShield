@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2025.5.3)  3 MAY 2025 02:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2025.5.3)  3 MAY 2025 02:45
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -702,26 +702,7 @@ File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count313
 \l__pdf_internal_box=\box74
 )
-(./main.aux
-
-LaTeX Warning: Label `fig:architecture' multiply defined.
-
-
-LaTeX Warning: Label `fig:architecture' multiply defined.
-
-
-LaTeX Warning: Label `fig:architecture' multiply defined.
-
-
-LaTeX Warning: Label `fig:architecture' multiply defined.
-
-
-LaTeX Warning: Label `fig:architecture' multiply defined.
-
-
-LaTeX Warning: Label `fig:architecture' multiply defined.
-
-)
+(./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 139.
@@ -803,30 +784,38 @@ Underfull \hbox (badness 2326) in paragraph at lines 18--19
 \T1/ptm/m/n/10 (`/sqli`), re-flected XSS (`/xss_-script`), and mal-ware
  []
 
-<figures/blockarch.png, id=12, 1445.4pt x 1001.7425pt>
+[2]
+<figures/blockarch.png, id=17, 1445.4pt x 1001.7425pt>
 File: figures/blockarch.png Graphic file (type png)
 <use figures/blockarch.png>
 Package pdftex.def Info: figures/blockarch.png  used on input line 30.
 (pdftex.def)             Requested size: 516.0pt x 357.61581pt.
-) (./sections/discussion.tex [2])
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3 <./figures/blockarch.png>] (./sections/conclusions.tex
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 13
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 43
 .
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
+Underfull \hbox (badness 10000) in paragraph at lines 48--49
+   [] \T1/ptm/b/n/10 Mal-ware Down-loads (\T1/pcr/b/n/10 /malware\T1/ptm/b/n/10
+ , \T1/pcr/b/n/10 /disguised_-
+ []
+
+
+Underfull \hbox (badness 4913) in paragraph at lines 48--49
+\T1/ptm/m/n/10 Pages of-fer-ing files dis-guised as doc-u-ments or
+ []
+
+) (./sections/discussion.tex) [3]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+(./sections/conclusions.tex
 Underfull \hbox (badness 2547) in paragraph at lines 23--24
 []\T1/ptm/b/n/10 Scrapy's Be-hav-ior. \T1/ptm/m/n/10 When sub-mit-ting pay-load
 s via
  []
 
-
+[4 <./figures/blockarch.png>]
 Underfull \hbox (badness 4013) in paragraph at lines 48--49
 []\T1/ptm/m/n/10 Inline scripts: \T1/pcr/m/n/10 <script>alert(1)</script>\T1/pt
 m/m/n/10 ,
@@ -859,7 +848,7 @@ Underfull \hbox (badness 3460) in paragraph at lines 70--71
 []\T1/ptm/m/n/10 Dangerous han-dlers ex-e-cute in-side the crawler's
  []
 
-[4]
+
 Underfull \hbox (badness 2573) in paragraph at lines 123--124
 []\T1/ptm/m/n/10 Common XSS vec-tors (e.g. SVG \T1/pcr/m/n/10 onload\T1/ptm/m/n
 /10 , \T1/pcr/m/n/10 <img
@@ -871,37 +860,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 123--124
 T1/ptm/m/n/10 , data-
  []
 
-<figures/home.png, id=26, 1424.32124pt x 692.5875pt>
-File: figures/home.png Graphic file (type png)
-<use figures/home.png>
-Package pdftex.def Info: figures/home.png  used on input line 144.
-(pdftex.def)             Requested size: 516.0pt x 250.90594pt.
-<figures/sqltest.png, id=28, 354.32375pt x 195.73125pt>
-File: figures/sqltest.png Graphic file (type png)
-<use figures/sqltest.png>
-Package pdftex.def Info: figures/sqltest.png  used on input line 151.
-(pdftex.def)             Requested size: 516.0pt x 285.04845pt.
-<figures/xssdash.png, id=29, 1455.4375pt x 721.69624pt>
-File: figures/xssdash.png Graphic file (type png)
-<use figures/xssdash.png>
-Package pdftex.def Info: figures/xssdash.png  used on input line 158.
-(pdftex.def)             Requested size: 516.0pt x 255.86809pt.
-<figures/maldash.png, id=30, 1456.44125pt x 720.6925pt>
-File: figures/maldash.png Graphic file (type png)
-<use figures/maldash.png>
-Package pdftex.def Info: figures/maldash.png  used on input line 165.
-(pdftex.def)             Requested size: 516.0pt x 255.32527pt.
-<figures/sqli.png, id=31, 1406.25375pt x 685.56125pt>
-File: figures/sqli.png Graphic file (type png)
-<use figures/sqli.png>
-Package pdftex.def Info: figures/sqli.png  used on input line 173.
-(pdftex.def)             Requested size: 516.0pt x 251.55106pt.
-<figures/malres.png, id=32, 1404.24625pt x 352.31625pt>
-File: figures/malres.png Graphic file (type png)
-<use figures/malres.png>
-Package pdftex.def Info: figures/malres.png  used on input line 180.
-(pdftex.def)             Requested size: 516.0pt x 129.46257pt.
-) (./main.bbl
+[5]) (./main.bbl
 ** WARNING: IEEEtran.bst: No hyphenation pattern has been
 ** loaded for the language `en'. Using the pattern for
 ** the default language instead.
@@ -918,6 +877,37 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--41
 []\T1/ptm/m/n/10 MITRE, ``Ma-li-cious crawler testbed,'' 2022,
  []
 
+) (./sections/appendix.tex
+<figures/home.png, id=30, 1424.32124pt x 692.5875pt>
+File: figures/home.png Graphic file (type png)
+<use figures/home.png>
+Package pdftex.def Info: figures/home.png  used on input line 50.
+(pdftex.def)             Requested size: 516.0pt x 250.90594pt.
+<figures/sqltest.png, id=32, 354.32375pt x 195.73125pt>
+File: figures/sqltest.png Graphic file (type png)
+<use figures/sqltest.png>
+Package pdftex.def Info: figures/sqltest.png  used on input line 57.
+(pdftex.def)             Requested size: 516.0pt x 285.04845pt.
+<figures/xssdash.png, id=33, 1455.4375pt x 721.69624pt>
+File: figures/xssdash.png Graphic file (type png)
+<use figures/xssdash.png>
+Package pdftex.def Info: figures/xssdash.png  used on input line 64.
+(pdftex.def)             Requested size: 516.0pt x 255.86809pt.
+<figures/maldash.png, id=34, 1456.44125pt x 720.6925pt>
+File: figures/maldash.png Graphic file (type png)
+<use figures/maldash.png>
+Package pdftex.def Info: figures/maldash.png  used on input line 71.
+(pdftex.def)             Requested size: 516.0pt x 255.32527pt.
+<figures/sqli.png, id=35, 1406.25375pt x 685.56125pt>
+File: figures/sqli.png Graphic file (type png)
+<use figures/sqli.png>
+Package pdftex.def Info: figures/sqli.png  used on input line 78.
+(pdftex.def)             Requested size: 516.0pt x 251.55106pt.
+<figures/malres.png, id=36, 1404.24625pt x 352.31625pt>
+File: figures/malres.png Graphic file (type png)
+<use figures/malres.png>
+Package pdftex.def Info: figures/malres.png  used on input line 85.
+(pdftex.def)             Requested size: 516.0pt x 129.46257pt.
 )
 
 ** Conference Paper **
@@ -933,31 +923,28 @@ Before submitting the final camera ready copy, remember to:
 
 Package natbib Warning: There were undefined citations.
 
-[5] [6 <./figures/home.png> <./figures/sqltest.png>] [7 <./figures/xssdash.png>
- <./figures/maldash.png>] [8 <./figures/sqli.png> <./figures/malres.png>]
-(./main.aux)
-
-LaTeX Warning: There were multiply-defined labels.
-
- ) 
+[6] [7 <./figures/home.png> <./figures/sqltest.png>] [8 <./figures/xssdash.png>
+ <./figures/maldash.png>] [9 <./figures/sqli.png> <./figures/malres.png>]
+(./main.aux) ) 
 Here is how much of TeX's memory you used:
- 17469 strings out of 481239
- 338381 string characters out of 5920378
- 614261 words of memory out of 5000000
- 32369 multiletter control sequences out of 15000+600000
- 635864 words of font info for 123 fonts, out of 8000000 for 9000
+ 17487 strings out of 481239
+ 338726 string characters out of 5920378
+ 614270 words of memory out of 5000000
+ 32383 multiletter control sequences out of 15000+600000
+ 636485 words of font info for 125 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 59i,8n,75p,1001b,274s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf
--dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
-utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (8 pages, 1292832 bytes).
+ 59i,8n,75p,1001b,336s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/u
+tmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (9 pages, 1307277 bytes).
 PDF statistics:
- 74 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
+ 81 PDF objects out of 1000 (max. 8388607)
+ 48 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  48 words of extra memory for PDF output out of 10000 (max. 10000000)
 
